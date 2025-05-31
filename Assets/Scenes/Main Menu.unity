@@ -552,6 +552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newGameLevel: Novel
+  continueButton: {fileID: 0}
 --- !u!224 &200892493 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6775989424987628913, guid: 00a1827b5d9855549884bfda74b9a41c, type: 3}
@@ -1010,6 +1011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newGameLevel: Novel
+  continueButton: {fileID: 0}
 --- !u!4 &322991098
 Transform:
   m_ObjectHideFlags: 0
@@ -3422,11 +3424,72 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7280663861312143629, guid: 00a1827b5d9855549884bfda74b9a41c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7280663861312143629, guid: 00a1827b5d9855549884bfda74b9a41c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7280663861312143629, guid: 00a1827b5d9855549884bfda74b9a41c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1525733452}
+    - target: {fileID: 7280663861312143629, guid: 00a1827b5d9855549884bfda74b9a41c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7280663861312143629, guid: 00a1827b5d9855549884bfda74b9a41c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ContinueButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 7280663861312143629, guid: 00a1827b5d9855549884bfda74b9a41c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7280663861312143629, guid: 00a1827b5d9855549884bfda74b9a41c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5559120913582619414, guid: 00a1827b5d9855549884bfda74b9a41c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1525733452}
   m_SourcePrefab: {fileID: 100100000, guid: 00a1827b5d9855549884bfda74b9a41c, type: 3}
+--- !u!1 &1525733450 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5559120913582619414, guid: 00a1827b5d9855549884bfda74b9a41c, type: 3}
+  m_PrefabInstance: {fileID: 1525733449}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1525733451 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7280663861312143629, guid: 00a1827b5d9855549884bfda74b9a41c, type: 3}
+  m_PrefabInstance: {fileID: 1525733449}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525733450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1525733452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525733450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20db8d49eb94b06478e03fc005568287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newGameLevel: Novel
+  continueButton: {fileID: 1525733451}
 --- !u!1 &1549035418
 GameObject:
   m_ObjectHideFlags: 0

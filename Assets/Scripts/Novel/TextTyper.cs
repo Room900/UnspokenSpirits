@@ -13,6 +13,7 @@ public class TextTyper : MonoBehaviour
     public GameObject[] backgroundImages;
     public GameObject initialImage;
     [SerializeField] private TMP_Text displayText;
+    public TMP_Text click_to_continue;
 
     // Добавляем ссылки на панели
     public GameObject textPanel; // Панель с текстом (TextMeshPro)
@@ -28,6 +29,7 @@ public class TextTyper : MonoBehaviour
     private CanvasGroup currentCanvasGroup;
     private CanvasGroup nextCanvasGroup;
     private CanvasGroup initialImageCanvasGroup;
+    private bool text_closed=false;
 
     void Awake()
     {
@@ -80,6 +82,7 @@ public class TextTyper : MonoBehaviour
             "Вот он- мой “дом”. Вставив ключ и провернув дважды…",
 
             "… я вошел в небольшую комнату, окрашенную в серые тона.",
+
 
             " По наличию вещей и только двух кроватей стало понятно, сосед мой учится уже не первый год. На столе лежала записка: напиши мне-> qwerty.123."
         };
@@ -211,6 +214,7 @@ public class TextTyper : MonoBehaviour
             backgroundChangeCounter++;
         }
 
+
         if (currentBlockIndex < textBlocks.Length)
         {
             displayText.text = "";
@@ -229,6 +233,11 @@ public class TextTyper : MonoBehaviour
 
     void ChangeBackgroundAndHideImage()
     {
+        if (!text_closed)
+        {
+            click_to_continue.gameObject.SetActive(false);
+            text_closed = true;
+        }
         StartCoroutine(FadeOutInitialImage(initialImageCanvasGroup, fadeDuration));
         ChangeBackground();
     }
@@ -324,7 +333,6 @@ public class TextTyper : MonoBehaviour
             yield return null;
         }
     }
-
     IEnumerator FadeOutInitialImage(CanvasGroup cg, float duration)
     {
         float time = 0;
@@ -340,7 +348,9 @@ public class TextTyper : MonoBehaviour
     // Метод для скрытия панели текста и отображения панели телефона
     void HideTextPanelAndShowPhonePanel()
     {
-        phonePanel.SetActive(true); 
+        Debug.Log("Deactivating text panel, activating phone panel");
+        phonePanel.SetActive(true);
         textPanel.SetActive(false);
     }
+
 }
