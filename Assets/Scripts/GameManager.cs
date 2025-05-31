@@ -22,6 +22,13 @@ public class GameManager : MonoBehaviour
     private float timeSinceLastSpawn;
     private List<string> availableDrinks; // Populated from recipes
 
+    private List<Sprite> availableSprites = new List<Sprite>(); // ƒоступные спрайты
+    private Sprite lastUsedSprite; // ѕоследний использованный спрайт
+
+  
+    [SerializeField] private List<Sprite> guestSprites; // ƒобавл€ем список спрайтов
+
+
     // --- Recipe Variables ---
     public List<CocktailRecipe> recipes; // List of all recipes
 
@@ -41,6 +48,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        // »нициализируем список доступных спрайтов
+        availableSprites = new List<Sprite>(guestSprites);
+
         timeSinceLastSpawn = spawnInterval;
         if (preparationStatusText != null)
         {
@@ -490,61 +500,100 @@ public class GameManager : MonoBehaviour
         heldDrink = null; // Ensure heldDrink state is cleared
     }
 
-    // --- Guest Spawn Logic (from previous step, ensure it's included) ---
-    void TrySpawnGuest()
+    Transform FindFreeSpot()
     {
-        // Find a free spot for a guest
-        Transform freeSpot = null;
         foreach (Transform spot in guestSpots)
         {
-            // Check if the spot is occupied (by checking for children)
-            if (spot.childCount == 0)
-            {
-                freeSpot = spot;
-                break;
-            }
+            if (spot.childCount == 0) return spot;
         }
+        return null;
+    }
+    GameObject InstantiateGuest(Transform spot)
+    {
+        GameObject guestObj = Instantiate(guestPrefab, spot.position, Quaternion.identity);
+        guestObj.transform.SetParent(spot);
 
-        if (freeSpot != null)
+        // ”станавливаем случайный уникальный спрайт
+        Sprite randomSprite = GetUniqueRandomSprite();
+        if (randomSprite == null)
         {
-            // Create a new guest from the prefab at the free spot's position
-            GameObject newGuestObj = Instantiate(guestPrefab, freeSpot.position, Quaternion.identity);
-            newGuestObj.transform.SetParent(freeSpot); // Make the guest a child of the spot
+            Debug.LogError("No available guest sprites!");
+            Destroy(guestObj);
+            return null;
+        }
 
-            Guest newGuest = newGuestObj.GetComponent<Guest>();
-            if (newGuest == null)
+        guestObj.GetComponent<SpriteRenderer>().sprite = randomSprite;
+        return guestObj;
+    }
+    Sprite GetUniqueRandomSprite()
+    {
+        if (availableSprites.Count == 0)
+        {
+            // ≈сли все спрайты использованы, сбрасываем список
+            availableSprites = new List<Sprite>(guestSprites);
+
+            // ”дал€ем последний использованный спрайт, чтобы избежать повторений
+            if (lastUsedSprite != null && availableSprites.Count > 1)
             {
-                Debug.LogError("Guest prefab is missing the Guest script!");
-                Destroy(newGuestObj); // Clean up if prefab is misconfigured
-                return;
-            }
-
-            // !!! Important: Select a drink only from the available recipes !!!
-            if (availableDrinks != null && availableDrinks.Count > 0)
-            {
-                string randomDrink = availableDrinks[Random.Range(0, availableDrinks.Count)];
-                newGuest.SetOrder(randomDrink);
-
-                // Ensure the guest prefab has a ClickableItem component with itemType="Guest"
-                ClickableItem guestClickItem = newGuestObj.GetComponent<ClickableItem>();
-                if (guestClickItem == null)
-                {
-                    guestClickItem = newGuestObj.AddComponent<ClickableItem>();
-                }
-                guestClickItem.itemType = "Guest";
-                guestClickItem.itemName = "Guest"; // Can be unique if needed
-
-                Debug.Log("New guest arrived and ordered: " + randomDrink);
-            }
-            else
-            {
-                Debug.LogError("No available drinks in recipes for guest spawn!");
-                Destroy(newGuestObj); // Destroy the guest if no drinks can be ordered
+                availableSprites.Remove(lastUsedSprite);
             }
         }
-        else
+
+        // ¬ыбираем случайный спрайт из доступных
+        int randomIndex = Random.Range(0, availableSprites.Count);
+        Sprite selectedSprite = availableSprites[randomIndex];
+
+        // ќбновл€ем последний использованный спрайт
+        lastUsedSprite = selectedSprite;
+        availableSprites.RemoveAt(randomIndex);
+
+        return selectedSprite;
+    }
+    string GetRandomDrink()
+    {
+        if (availableDrinks.Count == 0)
+        {
+            Debug.LogError("No available drinks!");
+            return "";
+        }
+        return availableDrinks[Random.Range(0, availableDrinks.Count)];
+    }
+
+    void SetupGuestComponents(GameObject guestObj)
+    {
+        Guest guest = guestObj.GetComponent<Guest>();
+        if (guest == null)
+        {
+            Debug.LogError("Guest prefab is missing the Guest script!");
+            Destroy(guestObj);
+            return;
+        }
+
+        guest.SetOrder(GetRandomDrink());
+
+        ClickableItem guestClickItem = guestObj.GetComponent<ClickableItem>();
+        if (guestClickItem == null)
+        {
+            guestClickItem = guestObj.AddComponent<ClickableItem>();
+        }
+        guestClickItem.itemType = "Guest";
+        guestClickItem.itemName = "Guest";
+    }
+// --- Guest Spawn Logic (from previous step, ensure it's included) ---
+void TrySpawnGuest()
+    {
+
+        Transform freeSpot = FindFreeSpot();
+        if (freeSpot == null)
         {
             Debug.Log("No free spots for guests.");
+            return;
         }
+
+        GameObject newGuestObj = InstantiateGuest(freeSpot);
+        if (newGuestObj == null) return;
+
+        SetupGuestComponents(newGuestObj);
+        Debug.Log("New guest arrived and ordered: " + GetRandomDrink());
     }
 }

@@ -1136,9 +1136,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 669442628}
-  - {fileID: 365990988}
   - {fileID: 387889387}
-  - {fileID: 699523092}
   - {fileID: 1648456970}
   - {fileID: 1684903422}
   m_Father: {fileID: 0}
@@ -1658,37 +1656,6 @@ RectTransform:
   m_AnchoredPosition: {x: 2.209999, y: -0.8997855}
   m_SizeDelta: {x: -13.927109, y: -2.1515703}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &365990987
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 365990988}
-  m_Layer: 5
-  m_Name: GuestSpot2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &365990988
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 365990987}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.6, y: 2.28, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 225686529}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &387889386
 GameObject:
   m_ObjectHideFlags: 0
@@ -1752,10 +1719,11 @@ MonoBehaviour:
   guestPrefab: {fileID: 4568551874176113039, guid: 2b51bb8ae20659649934054dbe960ab8, type: 3}
   guestSpots:
   - {fileID: 669442628}
-  - {fileID: 365990988}
   - {fileID: 387889387}
-  - {fileID: 699523092}
   spawnInterval: 5
+  guestSprites:
+  - {fileID: 21300000, guid: 980444115d4c5104bb0b5439de9f36df, type: 3}
+  - {fileID: 21300000, guid: b358e74224fd82441be342e73f83a2ff, type: 3}
   recipes:
   - drinkName: Negroni
     ingredients:
@@ -2075,37 +2043,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &699523091
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 699523092}
-  m_Layer: 5
-  m_Name: GuestSpot4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &699523092
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 699523091}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.55, y: 2.28, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 225686529}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &733693331
 GameObject:
   m_ObjectHideFlags: 0
