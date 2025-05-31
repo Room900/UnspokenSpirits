@@ -10,12 +10,14 @@ public class NovelTextSystem : MonoBehaviour
 {
     [Header("UI References")]
     public TMP_Text dialogueText;
-    public TMP_Text nameText;     
-    public GameObject choiceButtonPanel; 
-    public Button choiceButtonPrefab;    
+    public TMP_Text nameText;
+    public GameObject choiceButtonPanel;
+    public Button choiceButtonPrefab;
+    public GameObject txtObj;
 
     [Header("Background Settings")]
     public GameObject[] backgroundImages; // Массив фоновых изображений
+    public GameObject final_back; 
     private CanvasGroup[] backgroundCanvasGroups;
     private int currentBackgroundIndex = 0;
     public float backgroundFadeDuration = 1f;
@@ -148,7 +150,9 @@ public class NovelTextSystem : MonoBehaviour
         else
         {
             Debug.Log("End of story");
-            SceneManager.LoadScene(2);
+            backgroundImages[currentBackgroundIndex].SetActive(false);
+            final_back.SetActive(true);
+            txtObj.SetActive(false);
         }
     }
 

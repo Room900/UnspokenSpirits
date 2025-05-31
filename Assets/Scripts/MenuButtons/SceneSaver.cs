@@ -5,33 +5,47 @@ public class SceneSaver : MonoBehaviour
 {
     private const string LAST_SCENE_KEY = "LastScene";
 
-    // Вызываем при загрузке любой сцены (кроме главного меню)
-    public static void SaveLastScene()
+    public static void SaveCurrentScene()
     {
-        int currentScene = SceneManager.GetActiveScene().buildIndex;
-        PlayerPrefs.SetInt(LAST_SCENE_KEY, currentScene);
-        PlayerPrefs.Save();
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        // Не сохраняем главное меню (индекс 0)
+        if (currentSceneIndex > 0)
+        {
+            PlayerPrefs.SetInt(LAST_SCENE_KEY, currentSceneIndex);
+            PlayerPrefs.Save();
+            Debug.Log($"Manually saved scene index: {currentSceneIndex}");
+        }
     }
 
-    // Проверяем наличие сохранения
     public static bool HasSave()
     {
-        return PlayerPrefs.HasKey(LAST_SCENE_KEY);
+        if (PlayerPrefs.HasKey(LAST_SCENE_KEY))
+        {
+            int savedIndex = PlayerPrefs.GetInt(LAST_SCENE_KEY);
+            // Проверяем, что сохраненный индекс существует в Build Settings
+            return savedIndex > 0 && savedIndex < SceneManager.sceneCountInBuildSettings;
+        }
+        return false;
     }
 
-    // Загружаем сохранённую сцену
     public static void LoadSavedScene()
     {
         if (HasSave())
         {
             int sceneIndex = PlayerPrefs.GetInt(LAST_SCENE_KEY);
+            Debug.Log($"Loading saved scene index: {sceneIndex}");
             SceneManager.LoadScene(sceneIndex);
         }
         else
         {
-            Debug.LogWarning("No saved scene found!");
-            // Если сохранения нет - грузим первую сцену после меню
-            SceneManager.LoadScene(1);
+            Debug.LogWarning("No valid saved scene found! Loading default (scene 1)");
+            SceneManager.LoadScene(1); // Первая сцена после главного меню
         }
+    }
+
+    public static void ClearSave()
+    {
+        PlayerPrefs.DeleteKey(LAST_SCENE_KEY);
+        PlayerPrefs.Save();
     }
 }
