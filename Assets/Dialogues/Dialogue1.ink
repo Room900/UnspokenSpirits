@@ -153,8 +153,8 @@ VAR characterName = "Карина"
 Хехе, спасибо.
 # BG_1
 # AUTHOR_TEXT
-~characterName = ""
-Ждите обновлений
+~characterName = "Ждите обновлений"
+:)
 ->END
 === aboutKarina ===
 # BG_4
