@@ -5,29 +5,27 @@ public class SceneAutoSaver : MonoBehaviour
 {
     private void Awake()
     {
-        // Делаем объект неуничтожаемым при загрузке новых сцен
         DontDestroyOnLoad(gameObject);
-
-        // Подписываемся на событие изменения активной сцены
-        SceneManager.activeSceneChanged += OnActiveSceneChanged;
     }
 
-    private void OnActiveSceneChanged(Scene previousScene, Scene newScene)
+    private void OnEnable()
     {
-        // Сохраняем только если предыдущая сцена НЕ главное меню (индекс 0)
-        if (previousScene.buildIndex > 0)
-        {
-            PlayerPrefs.SetInt("LastScene", previousScene.buildIndex);
-            PlayerPrefs.Save();
-
-            // Для отладки (можно удалить после тестов)
-            Debug.Log($"Автосохранение: сцена {previousScene.name} (индекс: {previousScene.buildIndex})");
-        }
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
-        // Отписываемся от события при уничтожении объекта
-        SceneManager.activeSceneChanged -= OnActiveSceneChanged;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Не сохраняем при первой загрузке меню
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+            return;
+
+        PlayerPrefs.SetInt("LastScene", SceneManager.GetActiveScene().buildIndex);
+        PlayerPrefs.Save();
+        Debug.Log($"Saved scene: {SceneManager.GetActiveScene().name} (index: {SceneManager.GetActiveScene().buildIndex})");
     }
 }

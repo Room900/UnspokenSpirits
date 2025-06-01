@@ -10,6 +10,7 @@ public class SequenceController : MonoBehaviour
     public GameObject secondGameObject;
     public GameObject thirdGameObject;
     public GameObject panelToClose;
+    public GameObject zapiska;
 
     private bool waitingForInput = false;
 
@@ -30,6 +31,7 @@ public class SequenceController : MonoBehaviour
             Debug.LogError("Убедитесь, что все объекты назначены в инспекторе!");
             yield break; // Прекращаем выполнение корутины
         }
+        zapiska.SetActive(false);
 
         // Отключаем все объекты в начале
         firstGameObject.SetActive(false);
