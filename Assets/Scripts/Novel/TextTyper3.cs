@@ -20,7 +20,6 @@ public class NovelTextSystem2 : MonoBehaviour
     public GameObject choiceButtonPanel;
     public Button choiceButtonPrefab;
     public GameObject txtObj;
-    public GameObject ToBar;
 
     [Header("Background Settings")]
     public GameObject[] backgroundImages; // Массив фоновых изображений
@@ -179,7 +178,6 @@ public class NovelTextSystem2 : MonoBehaviour
             backgroundImages[currentBackgroundIndex].SetActive(false);
             final_back.SetActive(true);
             txtObj.SetActive(false);
-            ToBar.SetActive(true);
         }
     }
 
